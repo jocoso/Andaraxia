@@ -1,5 +1,7 @@
+// ./KrakenEngine/Core/krakeneng.cpp
 #include "krakeneng.h"
 
+// Library Core Run
 void KrakenEngine::run() {
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
     sf::CircleShape shape(100.f);
