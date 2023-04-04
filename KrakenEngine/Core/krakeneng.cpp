@@ -14,6 +14,7 @@ void KrakenEngine::run() {
             std::cout << "CAUGHT " << e.what() << std::endl;
             std::cout << "KRAK_ERR: INVALID WINDOW _WIN" << std::endl;
     }
+    // ====
 
     while(_win->isOpen()) {
         sf::Event event;
@@ -22,8 +23,6 @@ void KrakenEngine::run() {
             if(event.type == sf::Event::Closed) _win->close();
         }
 
-        // if _win is nullpointer or null
-        
         _win->clear();
         _win->display();
     }

@@ -1,42 +1,27 @@
-CFLAGS= 
-BIN_DIR=./bin
-OBJ_DIR=$(BIN_DIR)/obj
+# Set project directory one level above of Makefile directory. $(CURDIR) is a GNU make variable containing the path to the current working directory
+PROJ_DIR := $(realpath $(CURDIR)/..)
+CLIENT_DIR := .$(PROJDIR)/Client
+KRAKEN_DIR := .$(PROJDIR)/KrakenEngine
+BUILD_DIR := .$(PROJDIR)/Build
 
-CLIENT_DIR=./Client
+# Name the final executable
+TARGET= prototype.exe
 
-KRK_LIB_DIR=./KrakenEngine
-KRK_LIB_CORE_DIR=$(KRK_LIB_DIR)/Core
+# Commands shown y/n
+VERBOSE = TRUE
 
-SFML_INCLUDE=.\libraries\SFML-2.5.1\include
-SFML_LIB=.\libraries\SFML-2.5.1\lib
-SFML_DESC=-lsfml-graphics -lsfml-window -lsfml-system
+# List of directories
+CLIENT_DIRS=
+KRAKEN_DIRS= Core Props
+KRAKEN_SOURCE_DIRS = $(foreach dir, $(KRAKEN_DIRS), $(addprefix $(KRAKEN_DIR)/, $(dir)))
 
-EXEC=sfml-app
+# Generate the GCC includes parameters
+# KRK_INCLUDES = $(foreach dir, $(KRAKEN_SOURCE_DIRS), $(addprefix -I, $(dir)))
 
-all: $(BIN_DIR)/$(EXEC) run
+VPATH = $(KRAKEN_SOURCE_DIRS)
 
-# create client object files
-$(OBJ_DIR)/main.o: $(CLIENT_DIR)/main.cpp $(OBJ_DIR)
-	g++ -c $< -I$(SFML_INCLUDE) -o $@
+# Create a list of *.c sources
+SOURCES = $(foreach dir,$(KRAKEN_SOURCE_DIRS),$(wildcard $(dir)/*.cpp))
 
-# create library object files
-$(OBJ_DIR)/%.o: $(KRK_LIB_CORE_DIR)/%.cpp $(OBJ_DIR)
-	g++ -c $< -I$(SFML_INCLUDE) -o $@
-
-# creates bin iff bin directory does not exists
-$(BIN_DIR):
-	[ -d $(BIN_DIR) ] || mkdir $(BIN_DIR)
-
-# creates obj iff obj directory does not exists
-$(OBJ_DIR): $(BIN_DIR)
-	[ -d $(OBJ_DIR) ] || mkdir $(OBJ_DIR)
-
-# linking...
-$(BIN_DIR)/$(EXEC): $(OBJ) $(OBJ_DIR)/main.o $(OBJ_DIR)/krakeneng.o
-	g++ $(OBJ_DIR)/main.o $(OBJ_DIR)/krakeneng.o -o $@ -L$(SFML_LIB) $(SFML_DESC)
-
-run:
-	$(BIN_DIR)/$(EXEC).exe
-
-clean:
-	rm -rf bin
+all:
+	@echo $(SOURCES)
