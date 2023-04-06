@@ -33,8 +33,8 @@ $(OBJ_DIR): $(BIN_DIR)
 	[ -d $(OBJ_DIR) ] || mkdir $(OBJ_DIR)
 
 # linking...
-$(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o
-	g++ $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o -o $@ -L$(SFML_LIB) $(SFML_DESC)
+$(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/prop.o
+	g++ $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/prop.o -o $@ -L$(SFML_LIB) $(SFML_DESC)
 
 run:
 	$(BIN_DIR)/$(EXEC).exe
