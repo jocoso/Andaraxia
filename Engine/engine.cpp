@@ -28,7 +28,7 @@ void Engine::run() {
             std::cout << "CAUGHT " << e.what() << std::endl;
             std::cout << "KRAK_ERR: INVALID WINDOW _WIN" << std::endl;
     }
-
+    int i;
     while(_win->isOpen()) {
         sf::Event event;
 
@@ -40,9 +40,8 @@ void Engine::run() {
         
         _win->clear(sf::Color::Black);
         
-        for(auto it = _propList.begin(); it != _propList.end();) {
-            it->second->render(_win);
-            ++it;
+        for(i = 0; i < _propList.size(); i++) {
+            _propList[i]->render(_win);
         }
 
         _win->display();

@@ -1,6 +1,9 @@
 CFLAGS= 
 BIN_DIR=./bin
 OBJ_DIR=$(BIN_DIR)/obj
+TEST_DIR=./Test
+
+CC = g++
 
 CLIENT_DIR=./Client
 
@@ -16,13 +19,19 @@ all: createDirectories $(BIN_DIR)/$(EXEC) run
 
 createDirectories: $(OBJ_DIR)
 
+.PHONY: test
+TEST_NAME?=enginetest
+test: $(OBJ_DIR)/engine.o $(OBJ_DIR)/prop.o
+	$(CC) -c $(TEST_DIR)/$(TEST_NAME).cpp -I$(SFML_INCLUDE) -o $(TEST_DIR)/$(TEST_NAME).o
+	$(CC) $(TEST_DIR)/$(TEST_NAME).o $^ -o $(TEST_DIR)/$(TEST_NAME).exe -L$(SFML_LIB) $(SFML_DESC) 
+	./$(TEST_DIR)/$(TEST_NAME).exe
 # create client object files
 $(OBJ_DIR)/main.o: ./main.cpp
-	g++ -c $< -I$(SFML_INCLUDE) -o $@
+	$(CC) -c $< -I$(SFML_INCLUDE) -o $@
 
 # create library object files
 $(OBJ_DIR)/%.o: $(ENG_LIBDIR)/%.cpp
-	g++ -c $< -I$(SFML_INCLUDE) -o $@
+	$(CC) -c $< -I$(SFML_INCLUDE) -o $@
 
 # creates bin iff bin directory does not exists
 $(BIN_DIR):
@@ -34,7 +43,7 @@ $(OBJ_DIR): $(BIN_DIR)
 
 # linking...
 $(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/prop.o
-	g++ $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/prop.o -o $@ -L$(SFML_LIB) $(SFML_DESC)
+	$(CC) $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/prop.o -o $@ -L$(SFML_LIB) $(SFML_DESC)
 
 run:
 	$(BIN_DIR)/$(EXEC).exe
