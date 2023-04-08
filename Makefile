@@ -49,4 +49,4 @@ run:
 	$(BIN_DIR)/$(EXEC).exe
 
 clean:
-	rm -rf bin
+	rm -rf bin $(TEST_DIR)/*.o $(TEST_DIR)/*.exe
