@@ -15,13 +15,16 @@ SFML_DESC=-lsfml-graphics -lsfml-window -lsfml-system
 
 EXEC=sfml-app
 
+ENGINE_SRCS:=$(wildcard $(ENG_LIBDIR)/*.cpp)
+ENGINE_OBJS:=$(ENGINE_SRC:$(ENG_LIBDIR)/%.cpp=$(OBJ_DIR)/%.o)
+
 all: createDirectories $(BIN_DIR)/$(EXEC) run
 
 createDirectories: $(OBJ_DIR)
 
 .PHONY: test
 TEST_NAME?=enginetest
-test: $(OBJ_DIR)/engine.o $(OBJ_DIR)/prop.o
+test: $(ENGINE_OBJS)
 	$(CC) -c $(TEST_DIR)/$(TEST_NAME).cpp -I$(SFML_INCLUDE) -o $(TEST_DIR)/$(TEST_NAME).o
 	$(CC) $(TEST_DIR)/$(TEST_NAME).o $^ -o $(TEST_DIR)/$(TEST_NAME).exe -L$(SFML_LIB) $(SFML_DESC) 
 	./$(TEST_DIR)/$(TEST_NAME).exe
@@ -42,11 +45,11 @@ $(OBJ_DIR): $(BIN_DIR)
 	[ -d $(OBJ_DIR) ] || mkdir $(OBJ_DIR)
 
 # linking...
-$(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/scene.o
+$(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(ENGINE_OBJS)
 	$(CC) $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/scene.o -o $@ -L$(SFML_LIB) $(SFML_DESC)
 
 run:
-	$(BIN_DIR)/$(EXEC).exe
+	$(BIN_DIR)/$(EXEC).exe 
 
 clean:
 	rm -rf bin $(TEST_DIR)/*.o $(TEST_DIR)/*.exe
