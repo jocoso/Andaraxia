@@ -49,12 +49,12 @@
 #include <stdexcept>
 #include <SFML/Graphics.hpp>
 
-#include "./prop.h"
+#include "./scene.h"
 
 /*! Creates and execute all Scenes, menus and other core processes */
 class Engine {
 private:
-    std::map<int, Prop*> _propList; // Made a map to keep id integrity when erasing
+    std::map<int, Scene*> _propList; // Made a map to keep id integrity when erasing
     sf::RenderWindow *_win = nullptr;
 public:
     Engine(sf::RenderWindow *_win);
@@ -67,7 +67,7 @@ public:
      * @param prop An Scene to display
      * @return int Id of the given scene needed to access it inside Engine
      */
-    int add_prop(Prop *prop);
+    int add_scene(Scene *scene);
 
 
 
@@ -80,7 +80,7 @@ public:
      * @return true if removal was successful
      * @return false if removal couldn't be achieved for a reason or another
      */
-    bool rmv_prop(unsigned id);
+    bool rmv_scene(unsigned id);
 
 
     // TODO: Change to has_scene after creating the Scene class
@@ -92,7 +92,7 @@ public:
      * @return true if the scene is in the list,
      * @return false otherwise.
      */
-    bool has_prop(unsigned id);
+    bool has_scene(unsigned id);
 
 
 

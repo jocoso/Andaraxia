@@ -42,8 +42,8 @@ $(OBJ_DIR): $(BIN_DIR)
 	[ -d $(OBJ_DIR) ] || mkdir $(OBJ_DIR)
 
 # linking...
-$(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/prop.o
-	$(CC) $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/prop.o -o $@ -L$(SFML_LIB) $(SFML_DESC)
+$(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/scene.o
+	$(CC) $(OBJ_DIR)/main.o $(OBJ_DIR)/engine.o $(OBJ_DIR)/scene.o -o $@ -L$(SFML_LIB) $(SFML_DESC)
 
 run:
 	$(BIN_DIR)/$(EXEC).exe

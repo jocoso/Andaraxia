@@ -5,7 +5,7 @@
  * NAME:            Novella Engine
  * VERSION:         0.1
  * LASTREVISION:    04/08/2023
- * FILENAME:        ./engine/prop.cpp
+ * FILENAME:        ./engine/scene.cpp
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -39,14 +39,14 @@
  * 
  ***************************************************************************/
 
-#include "./prop.h"
+#include "./scene.h"
 
-int Prop::add_component(std::string placeholdername) {
+int Scene::add_component(std::string placeholdername) {
     _componentList[_componentList.size()] = placeholdername;
     return _componentList.size() -1;
 }
 
-bool Prop::rmv_component(int id) {
+bool Scene::rmv_component(int id) {
     if(_componentList.find(id) != _componentList.end()) {
         _componentList.erase(id);
         return true;
@@ -55,7 +55,7 @@ bool Prop::rmv_component(int id) {
     return false;
 }
 
-void Prop::render(sf::RenderWindow *win) {
+void Scene::render(sf::RenderWindow *win) {
     for(auto it = _componentList.begin(); it != _componentList.end();) {
         std::cout << it->first << " : " << it->second << std::endl;
         ++it;

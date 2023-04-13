@@ -2,8 +2,8 @@
 #include <SFML/Graphics.hpp>
 
 int main() {
-    Prop p0;
-    Prop p1;
+    Scene p0;
+    Scene p1;
 
     p0.add_component("Rosa");
     p0.add_component("Roja");
@@ -13,8 +13,8 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 500), "prototype 0.0.0");
     Engine e(&window);
 
-    e.add_prop(&p0);
-    e.add_prop(&p1);
+    e.add_scene(&p0);
+    e.add_scene(&p1);
 
     e.run();
     return 0;

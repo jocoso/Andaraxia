@@ -5,7 +5,7 @@
  * NAME:            Novella Engine
  * VERSION:         0.1
  * LASTREVISION:    04/08/2023
- * FILENAME:        ./engine/prop.h
+ * FILENAME:        ./engine/scene.h
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -50,7 +50,7 @@
 // TODO: Change Prop class name to Scene
 
 /*! Compartmentalize all code to be render and execute it all at once*/
-class Prop {
+class Scene {
 private:
     std::map<int, std::string> _componentList;
     // TODO: This is dumb. Remove it and replace it with _componentList.size().
@@ -60,7 +60,7 @@ protected:
     std::string _name;
     std::string _desc;
 public:
-    Prop():_componentCount(0){}
+    Scene():_componentCount(0){}
 
     // TODO: Change add_component to add_prop
 
@@ -91,4 +91,4 @@ public:
     void render(sf::RenderWindow *win);
 };
 
-#endif // PROP_H
+#endif // SCENE_H

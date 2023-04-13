@@ -53,13 +53,13 @@ Engine::Engine(sf::RenderWindow *win) {
 
 }
 
-int Engine::add_prop(Prop *prop) {
-    _propList[_propList.size()] = prop;
+int Engine::add_scene(Scene *scene) {
+    _propList[_propList.size()] = scene;
     return _propList.size() - 1;
 }
 
-bool Engine::rmv_prop(unsigned id) {
-    if (has_prop(id)) { 
+bool Engine::rmv_scene(unsigned id) {
+    if (has_scene(id)) { 
         _propList.erase(id); // Main reason why _propList is a map and not a list.
         return true;
     }
@@ -67,7 +67,7 @@ bool Engine::rmv_prop(unsigned id) {
     return false;
 }
 
-bool Engine::has_prop(unsigned id) {
+bool Engine::has_scene(unsigned id) {
     return _propList.find(id) != _propList.end();
 }
 
@@ -89,7 +89,7 @@ void Engine::run()
 
         for (i = 0; i < _propList.size(); i++) {
 
-            if (has_prop(i))
+            if (has_scene(i))
                 _propList[i]->render(_win);
         }
 
