@@ -44,7 +44,9 @@
 
 #include <string>
 #include <iostream>
+#include <system_error>
 #include <map>
+#include <stdexcept>
 #include <SFML/Graphics.hpp>
 
 #include "./prop.h"
@@ -83,6 +85,8 @@ public:
      * @param win A pointer to the window where we want the items rendered,
      */
     void render(sf::RenderWindow *win);
+
+    bool has_prop(std::string propname);
 };
 
 #endif // SCENE_H

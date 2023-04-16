@@ -23,3 +23,20 @@ std::string Prop::get_description() {
 unsigned Prop::get_id() {
     return _id;
 }
+
+unsigned Prop::add_aspect(std::string aspectname) {
+    
+    _aspectList[_aspectList.size()] = aspectname;
+    return _aspectList.size() - 1;
+
+}
+
+bool Prop::rmv_aspect(unsigned id) {
+
+    if(_aspectList.find(id) != _aspectList.end()) {
+        _aspectList.erase(id);
+        return true;
+    }
+    return false;
+
+}

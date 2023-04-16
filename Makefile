@@ -35,7 +35,7 @@ $(OBJ_DIR)/main.o: $(ENGINE_OBJS)
 
 # create library object files
 $(OBJ_DIR)/%.o: $(ENG_LIBDIR)/%.cpp
-	$(CC) -c $< -I$(SFML_INCLUDE) -o $@
+	$(CC) -c $^ -I$(SFML_INCLUDE) -o $@
 
 # creates bin iff bin directory does not exists
 $(BIN_DIR):
@@ -46,8 +46,8 @@ $(OBJ_DIR): $(BIN_DIR)
 	[ -d $(OBJ_DIR) ] || mkdir $(OBJ_DIR)
 
 # linking...
-$(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o 
-	$(CC) $(OBJ_DIR)/main.o $(ENGINE_OBJS) -o $@ -L$(SFML_LIB) $(SFML_DESC)
+$(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(ENGINE_OBJS)
+	$(CC) $^ -o $@ -L$(SFML_LIB) $(SFML_DESC)
 
 run:
 	$(BIN_DIR)/$(EXEC).exe 
