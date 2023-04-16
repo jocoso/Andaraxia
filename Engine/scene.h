@@ -86,7 +86,6 @@ public:
      */
     void render(sf::RenderWindow *win);
 
-    // TODO: This is dumb. Check with ID and not name. Name should be able to be repeated because only the user will be confused when that happens
     /**
      * @brief Check if a prop exists inside an scene
      * 
@@ -94,7 +93,7 @@ public:
      * @return true if the prop exists
      * @return false if it doesn't
      */
-    bool has_prop(std::string propname);
+    bool has_prop(unsigned id);
 };
 
 #endif // SCENE_H
