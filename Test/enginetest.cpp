@@ -23,93 +23,208 @@ bool returnErrorWhenParamIsNULL() {
     }
 }
 
-bool adding3PropsAndGetProperID() {
+bool adding3ScenesWNoErrors() {
     try {
 
         sf::RenderWindow window(sf::VideoMode(800, 500), "Prototype 0.0.0");
         Engine e(&window);
 
-        Prop p0; // ID 0
-        Prop p1; // ID 1
-        Prop p2; // ID 2
+        Scene s1;
+        Scene s2;
+        Scene s3;
 
-        p0.add_component("ID 0");
-        p1.add_component("ID 1");
-        p2.add_component("ID 2");
+        e.add_scene(&s1);
+        e.add_scene(&s2);
+        e.add_scene(&s3);
 
-        unsigned a = e.add_prop(&p0);
-        unsigned b = e.add_prop(&p1);
-        unsigned c = e.add_prop(&p2);
-
-        if(a == 0 && b == 1 && c == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
 
     } catch(std::exception &e) {
         return false;
     }
 }
 
-bool adding3PropsAndRemoveOneSuccessfully() {
+// No Run
+bool registerAPropTo3ScenesAndAddToEngineNR() {
     try{
         sf::RenderWindow window(sf::VideoMode(800, 500), "Prototype 0.0.0");
         Engine e(&window);
 
-        Prop p0; // ID 0
-        Prop p1; // ID 1
-        Prop p2; // ID 2
+        Scene s0; // ID 0
+        Scene s1; // ID 1
+        Scene s2; // ID 2
 
-        p0.add_component("ID 0");
-        p1.add_component("ID 1");
-        p2.add_component("ID 2");
+        s0.register_prop("a prop", "to love");
+        s1.register_prop("another", "to hate");
+        s2.register_prop("a third", "to relate");
 
-        unsigned a = e.add_prop(&p0);
-        unsigned b = e.add_prop(&p1);
-        unsigned c = e.add_prop(&p2);
+        e.add_scene(&s0);
+        e.add_scene(&s1);
+        e.add_scene(&s2);
 
-        bool res = e.rmv_prop(b);
+        return true;
 
-        if(res && e.has_prop(a) && !e.has_prop(b) && e.has_prop(c)) return true;
-        else return false;
     } catch(std::exception &e) {
         return false;
     }
+}
 
+// NR = No Run
+bool canRegisterAndRemovePropsWithoutThrowingException0NR() {
+    try {
+        sf::RenderWindow window(sf::VideoMode(800, 500), "Prototype 0.0.0");
+        Engine e(&window);
+
+        Scene s0; // ID 0
+        Scene s1; // ID 1
+        Scene s2; // ID 2
+
+        s0.register_prop("a prop", "to love");
+        s1.register_prop("another", "to hate");
+        s2.register_prop("a third", "to relate");
+
+        unsigned a = e.add_scene(&s0);
+        unsigned b = e.add_scene(&s1);
+        unsigned c = e.add_scene(&s2);
+
+        e.rmv_scene(a);
+        e.rmv_scene(b);
+
+        return !e.has_scene(a) && !e.has_scene(b) && e.has_scene(c);
+
+    } catch(std::exception &e) {
+        return false;
+    }
+}
+
+// NR = No Run
+bool canRegisterAndRemovePropsWithoutThrowingException1NR() {
+    try {
+        sf::RenderWindow window(sf::VideoMode(800, 500), "Prototype 0.0.0");
+        Engine e(&window);
+
+        Scene s0; // ID 0
+        Scene s1; // ID 1
+        Scene s2; // ID 2
+
+        s0.register_prop("a prop", "to love");
+        s1.register_prop("another", "to hate");
+        s2.register_prop("a third", "to relate");
+
+        unsigned a = e.add_scene(&s0);
+        unsigned b = e.add_scene(&s1);
+        unsigned c = e.add_scene(&s2);
+
+        e.rmv_scene(b);
+
+        return e.has_scene(a) && !e.has_scene(b) && e.has_scene(c);
+
+    } catch(std::exception &e) {
+        return false;
+    }
+}
+
+// NR = No Run
+bool removingASceneTwiceWillThrowAnError() {
+    try {
+        sf::RenderWindow window(sf::VideoMode(800, 500), "Prototype 0.0.0");
+        Engine e(&window);
+
+        Scene s0; // ID 0
+        Scene s1; // ID 1
+        Scene s2; // ID 2
+
+        s0.register_prop("a prop", "to love");
+        s1.register_prop("another", "to hate");
+        s2.register_prop("a third", "to relate");
+
+        unsigned a = e.add_scene(&s0);
+        unsigned b = e.add_scene(&s1);
+        unsigned c = e.add_scene(&s2);
+
+        e.rmv_scene(b);
+        
+
+        return !e.rmv_scene(b);
+
+    } catch(std::exception &e) {
+        return true;
+    }
+}
+
+bool registerAPropAlreadyInAndGetError() {
+    
+    try{
+        sf::RenderWindow window(sf::VideoMode(800, 500), "Prototype 0.0.0");
+        Engine e(&window);
+
+        Scene s0;
+
+        s0.register_prop("one", "two");
+        s0.register_prop("one", "three");
+
+        e.add_scene(&s0);
+
+        return false;
+
+    }catch(std::exception &e) {
+
+        return true;
+
+    }
 
 }
 
 void assert(bool assertion, std::string success_msg, std::string failure_msg) {
     if(assertion) {
-        std::cout << "SUCCESS: " << success_msg << std::endl;
+        std::cout << "=====> SUCCESS: " << success_msg << " <=====" << std::endl;
     } else {
-        std::cout << "FAILED: " << failure_msg << std::endl;
+        std::cout << "=====> FAILED: " << failure_msg << " <=====" << std::endl;
     }
 }
 
 int main() {
     assert(
-        canInitEngine(), 
-        "Engine was initialized without issue", 
-        "Engine couldn't be initialized"
+        canInitEngine(),
+        "Engine was initialized properly",
+        "Engine failed to initialize"
     );
 
     assert(
         returnErrorWhenParamIsNULL(),
-        "Given a null pointer as constructor parameter return error",
-        "Given a null pointer as constructor parameter does not return error"
+        "Engine returned an error when param is null",
+        "Engine failed to return an error when parameter was null"
     );
 
     assert(
-        adding3PropsAndGetProperID(),
-        "Get ID that makes sense",
-        "Ids don't make sense"
+        registerAPropTo3ScenesAndAddToEngineNR(),
+        "Registering some props to scene didn't return any error state",
+        "Registering some props to scene returned an error state"
     );
 
     assert(
-        adding3PropsAndRemoveOneSuccessfully(),
-        "Able to add and remove props keeping ID Integrity",
-        "Unable to add and remove props keeping ID Integrity"
+        registerAPropAlreadyInAndGetError(),
+        "Registering two props with the same name throws an exception",
+        "Registering two props with the same name doesn't throw an exception"
     );
+
+    assert(
+        canRegisterAndRemovePropsWithoutThrowingException0NR(),
+        "Adding and Removing props remains consistent",
+        "Adding and Removing props isn't consistent"
+    );
+
+    assert(
+        canRegisterAndRemovePropsWithoutThrowingException1NR(),
+        "Adding and Removing props remains consistent",
+        "Adding and Removing props isn't consistent"
+    );
+
+    assert(
+        removingASceneTwiceWillThrowAnError(),
+        "Engine Threw error when trying to remove a prop twice",
+        "To throw error when removing a prop twice"
+    );
+
+    return 0;
 }

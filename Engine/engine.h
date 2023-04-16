@@ -59,8 +59,6 @@ private:
 public:
     Engine(sf::RenderWindow *_win);
 
-    // TODO: Change to add_scene after creating the Scene class
-
     /**
      * @brief Adds an instance of Scene to the Engine for it to execute
      * 
@@ -68,10 +66,6 @@ public:
      * @return int Id of the given scene needed to access it inside Engine
      */
     int add_scene(Scene *scene);
-
-
-
-    // TODO: Change to rmv_scene after creating the Scene class
 
     /**
      * @brief Removes an instance of Scene from the Engine list
@@ -82,9 +76,6 @@ public:
      */
     bool rmv_scene(unsigned id);
 
-
-    // TODO: Change to has_scene after creating the Scene class
-    
     /**
      * @brief Check if an scene exists in the Engine list.
      * 
