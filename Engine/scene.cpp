@@ -51,24 +51,16 @@ Scene::~Scene() {
 }
 
 int Scene::register_prop(std::string name, std::string description) {
-    if(has_prop(name)) throw std::invalid_argument("KRK_ERR: A PROP WITH THAT NAME ALREADY EXISTS");
-
     _propList[_propList.size()] = new Prop(name, description, _propList.size());
     return _propList.size() -1;
 }
 
-bool Scene::has_prop(std::string propname) {
-    std::map<int, Prop*>::iterator it = _propList.begin();
-
-    for(; it != _propList.end(); ++it) {
-        if(it->second->get_name().compare(propname) == 0) return true;
-    }
-
-    return false;
+bool Scene::has_prop(unsigned id) {
+    return (_propList.find(id) != _propList.end());
 }
 
 bool Scene::rmv_prop(unsigned id) {
-    if(_propList.find(id) != _propList.end()) {
+    if(has_prop(id)) {
         _propList.erase(id);
         return true;
     }
