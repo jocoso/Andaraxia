@@ -33,8 +33,8 @@ unsigned Prop::add_aspect(std::string aspectname) {
 
 bool Prop::rmv_aspect(unsigned id) {
 
-    if(_aspectList.find(id) != _aspectList.end()) {
-        _aspectList.erase(id);
+    if(_aspectList.find(id) != _aspectList.end()) {  // Found inside the map
+        _aspectList.erase(id);                      
         return true;
     }
     return false;
