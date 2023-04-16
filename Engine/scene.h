@@ -39,30 +39,26 @@
  * 
  ***************************************************************************/
 
-#ifndef PROP_H
-#define PROP_H
+#ifndef SCENE_H
+#define SCENE_H
 
 #include <string>
 #include <iostream>
 #include <map>
 #include <SFML/Graphics.hpp>
 
-// TODO: Change Prop class name to Scene
+#include "./prop.h"
 
 /*! Compartmentalize all code to be render and execute it all at once*/
 class Scene {
 private:
-    std::map<int, std::string> _componentList;
-    // TODO: This is dumb. Remove it and replace it with _componentList.size().
-    int _componentCount;
-
+    std::map<int, Prop *> _propList;
 protected:
     std::string _name;
     std::string _desc;
 public:
-    Scene():_componentCount(0){}
-
-    // TODO: Change add_component to add_prop
+    Scene();
+    ~Scene();
 
     /**
      * @brief Adds a Prop to the list of renderable objects.
@@ -70,9 +66,7 @@ public:
      * @param placeholdername test parameter
      * @return int Id of the given prop needed to access it inside Scene
      */
-    int add_component(std::string placeholdername);
-
-    // TODO: Change rmv_component to rmv_prop
+    int register_prop(std::string name, std::string description);
 
     /**
      * @brief Remove a Prop from the list of renderable objects.
@@ -81,7 +75,7 @@ public:
      * @return true if removal was successful
      * @return false if removal couldn't be achieved for a reason or another.
      */
-    bool rmv_component(int id);
+    bool rmv_prop(unsigned id);
 
     /**
      * @brief Renders all items inside the renderable list.

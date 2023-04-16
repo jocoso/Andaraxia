@@ -41,14 +41,23 @@
 
 #include "./scene.h"
 
-int Scene::add_component(std::string placeholdername) {
-    _componentList[_componentList.size()] = placeholdername;
-    return _componentList.size() -1;
+Scene::Scene() {}
+Scene::~Scene() {
+
+    std::map<int, Prop*>::iterator itr = _propList.begin();
+    for (;itr != _propList.end(); ++itr) {
+        delete itr->second;
+    }
 }
 
-bool Scene::rmv_component(int id) {
-    if(_componentList.find(id) != _componentList.end()) {
-        _componentList.erase(id);
+int Scene::register_prop(std::string name, std::string description) {
+    _propList[_propList.size()] = new Prop(name, description, _propList.size());
+    return _propList.size() -1;
+}
+
+bool Scene::rmv_prop(unsigned id) {
+    if(_propList.find(id) != _propList.end()) {
+        _propList.erase(id);
         return true;
     }
 
@@ -56,8 +65,8 @@ bool Scene::rmv_component(int id) {
 }
 
 void Scene::render(sf::RenderWindow *win) {
-    for(auto it = _componentList.begin(); it != _componentList.end();) {
-        std::cout << it->first << " : " << it->second << std::endl;
+    for(auto it = _propList.begin(); it != _propList.end();) {
+        std::cout << it->first << " : " << it->second->get_name() << std::endl;
         ++it;
     }
 }
