@@ -24,9 +24,9 @@ createDirectories: $(OBJ_DIR)
 
 .PHONY: test
 TEST_NAME?=enginetest
-test: $(ENGINE_OBJS)
+test: createDirectories $(ENGINE_OBJS)
 	$(CC) -c $(TEST_DIR)/$(TEST_NAME).cpp -I$(SFML_INCLUDE) -o $(TEST_DIR)/$(TEST_NAME).o
-	$(CC) $(TEST_DIR)/$(TEST_NAME).o $^ -o $(TEST_DIR)/$(TEST_NAME).exe -L$(SFML_LIB) $(SFML_DESC) 
+	$(CC) $(TEST_DIR)/$(TEST_NAME).o $> -o $(TEST_DIR)/$(TEST_NAME).exe -L$(SFML_LIB) $(SFML_DESC) 
 	./$(TEST_DIR)/$(TEST_NAME).exe
 
 # create client object files
