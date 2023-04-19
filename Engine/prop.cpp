@@ -65,9 +65,9 @@ unsigned Prop::get_id() {
     return _id;
 }
 
-unsigned Prop::add_aspect(std::string aspectname) {
+unsigned Prop::add_aspect(Aspect *aspect) {
     
-    _aspectList[_aspectList.size()] = aspectname;
+    _aspectList[_aspectList.size()] = aspect;
     return _aspectList.size() - 1;
 
 }

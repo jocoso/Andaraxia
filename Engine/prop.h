@@ -47,13 +47,15 @@
 #include <map>
 #include <stdexcept>
 
+#include "aspect.h"
+
 /*! A customizable container for everything that requires rendering in a scene */
 class Prop {
 private:
     std::string     _name;
     std::string     _desc;
     unsigned        _id;
-    std::map<unsigned, std::string> _aspectList; // Made a map to keep id integrity when erasing
+    std::map<unsigned, Aspect *> _aspectList; // Made a map to keep id integrity when erasing
 
 public:
     Prop(std::string name, std::string description, unsigned id) : _name(name), _desc(description), _id(id) {}
@@ -99,10 +101,10 @@ public:
     /**
      * @brief Adds an instance of an Aspect to the prop
      * 
-     * @param aspectname aspect instance
+     * @param aspect aspect instance
      * @return an unsigned int representing the id of the aspect inside the Prop class
      */
-    unsigned add_aspect(std::string aspectname);
+    unsigned add_aspect(Aspect *aspect);
 
     /**
      * @brief Removes an instance of an aspect from the prop
