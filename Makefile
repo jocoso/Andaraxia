@@ -9,8 +9,8 @@ CLIENT_DIR=./Client
 
 ENG_LIBDIR=./Engine
 
-SFML_INCLUDE=.\libraries\SFML-2.5.1\include
-SFML_LIB=.\libraries\SFML-2.5.1\lib
+SFML_INCLUDE=./libraries/SFML-2.5.1/include
+SFML_LIB=./libraries/SFML-2.5.1/lib
 SFML_DESC=-lsfml-graphics -lsfml-window -lsfml-system
 
 EXEC=andaraxia
@@ -18,7 +18,8 @@ EXEC=andaraxia
 ENGINE_SRCS:=$(wildcard $(ENG_LIBDIR)/*.cpp)
 ENGINE_OBJS:=$(ENGINE_SRCS:$(ENG_LIBDIR)/%.cpp=$(OBJ_DIR)/%.o)
 
-all: createDirectories $(BIN_DIR)/$(EXEC) run
+all: createDirectories $(BIN_DIR)/$(EXEC) 
+#run
 
 createDirectories: $(OBJ_DIR)
 

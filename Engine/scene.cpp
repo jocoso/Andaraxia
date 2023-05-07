@@ -43,15 +43,14 @@
 
 Scene::Scene() {}
 Scene::~Scene() {
-
     std::map<int, Prop*>::iterator itr = _propList.begin();
     for (;itr != _propList.end(); ++itr) {
         delete itr->second;
     }
 }
 
-int Scene::register_prop(std::string name, std::string description) {
-    _propList[_propList.size()] = new Prop(name, description, _propList.size());
+int Scene::register_prop(std::string name) {
+    _propList[_propList.size()] = new Prop(name, _propList.size());
     return _propList.size() -1;
 }
 
@@ -69,7 +68,7 @@ bool Scene::rmv_prop(unsigned id) {
 
 void Scene::render(sf::RenderWindow *win) {
     for(auto it = _propList.begin(); it != _propList.end();) {
-        //std::cout << it->first << " : " << it->second->get_name() << std::endl;
+        it->second->render(*win);
         ++it;
     }
 }

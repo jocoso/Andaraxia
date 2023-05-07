@@ -42,6 +42,7 @@
 #ifndef PROP_H
 #define PROP_H
 
+#include <SFML/Graphics.hpp>
 #include <string>
 #include <system_error>
 #include <map>
@@ -53,12 +54,11 @@
 class Prop {
 private:
     std::string     _name;
-    std::string     _desc;
     unsigned        _id;
     std::map<unsigned, Aspect *> _aspectList; // Made a map to keep id integrity when erasing
 
 public:
-    Prop(std::string name, std::string description, unsigned id) : _name(name), _desc(description), _id(id) {}
+    Prop(std::string name, unsigned id) : _name(name), _id(id) {}
 
     /**
      * @brief Changes the name of the Prop
@@ -66,13 +66,6 @@ public:
      * @param name Name of the prop
      */
     void set_name(std::string name);
-
-    /**
-     * @brief Changes the description of the Prop
-     * 
-     * @param description Description of the prop
-     */
-    void set_description(std::string description);
 
     // TODO: Delete this because the id is something that must be managed internally and never changed by the user
     void set_id(unsigned id);
@@ -83,13 +76,6 @@ public:
      * @return A string representing name of the prop
      */
     std::string get_name(void);
-
-    /**
-     * @brief Get the description of the Prop
-     * 
-     * @return A string representing the description of the prop
-     */
-    std::string get_description(void);
 
     /**
      * @brief Get the id of the Prop
@@ -114,6 +100,13 @@ public:
      * @return false if the instance was already removed from the Prop
      */
     bool rmv_aspect(unsigned id);
+
+    /**
+     * @brief Renders all the Aspects in the prop
+     * 
+     * @param win Window were to render
+    */
+    void render(sf::RenderWindow &win);
     
     // TODO: Add a render method class
 protected:

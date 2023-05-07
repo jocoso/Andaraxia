@@ -68,7 +68,7 @@ public:
      * @param placeholdername test parameter
      * @return int Id of the given prop needed to access it inside Scene
      */
-    int register_prop(std::string name, std::string description);
+    int register_prop(std::string name);
 
     /**
      * @brief Remove a Prop from the list of renderable objects.
