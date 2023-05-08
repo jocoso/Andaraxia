@@ -80,3 +80,10 @@ void Prop::render(sf::RenderWindow &win) {
         ++it;
     }
 }
+
+void Prop::init(sf::RenderWindow &win) {
+    for(auto it = _aspectList.begin(); it != _aspectList.end();) {
+        it->second->init(win);
+        ++it;
+    }
+}

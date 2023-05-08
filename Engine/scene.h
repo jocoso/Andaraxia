@@ -50,11 +50,12 @@
 #include <SFML/Graphics.hpp>
 
 #include "./prop.h"
+#include "./aspect.h"
 
 /*! Compartmentalize all code to be render and execute it all at once*/
 class Scene {
 private:
-    std::map<int, Prop *> _propList;
+    std::map<std::string, Prop *> _propList;
 protected:
     std::string _name;
     std::string _desc;
@@ -65,10 +66,10 @@ public:
     /**
      * @brief Adds a Prop to the list of renderable objects.
      * 
-     * @param placeholdername test parameter
-     * @return int Id of the given prop needed to access it inside Scene
+     * @param name the name of prop
+     * @return true if the prop was successfully registered
      */
-    int register_prop(std::string name);
+    bool register_prop(std::string name);
 
     /**
      * @brief Remove a Prop from the list of renderable objects.
@@ -77,7 +78,7 @@ public:
      * @return true if removal was successful
      * @return false if removal couldn't be achieved for a reason or another.
      */
-    bool rmv_prop(unsigned id);
+    bool rmv_prop(std::string name);
 
     /**
      * @brief Renders all items inside the renderable list.
@@ -93,7 +94,10 @@ public:
      * @return true if the prop exists
      * @return false if it doesn't
      */
-    bool has_prop(unsigned id);
+    bool has_prop(std::string name);
+
+    void add_aspect(std::string name, Aspect *aspect);
+    void init(sf::RenderWindow &window);
 };
 
 #endif // SCENE_H

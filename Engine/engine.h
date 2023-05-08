@@ -54,7 +54,7 @@
 /*! Creates and execute all Scenes, menus and other core processes */
 class Engine {
 private:
-    std::map<int, Scene*> _propList; // Made a map to keep id integrity when erasing
+    std::map<int, Scene*> _sceneList; // Made a map to keep id integrity when erasing
     sf::RenderWindow *_win = nullptr;
 public:
     Engine(sf::RenderWindow *_win);

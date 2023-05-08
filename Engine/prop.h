@@ -109,6 +109,8 @@ public:
     void render(sf::RenderWindow &win);
     
     // TODO: Add a render method class
+
+    void init(sf::RenderWindow &win);
 protected:
 private:
 };

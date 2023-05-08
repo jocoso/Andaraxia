@@ -54,13 +54,13 @@ Engine::Engine(sf::RenderWindow *win) {
 }
 
 int Engine::add_scene(Scene *scene) {
-    _propList[_propList.size()] = scene;
-    return _propList.size() - 1;
+    _sceneList[_sceneList.size()] = scene;
+    return _sceneList.size() - 1;
 }
 
 bool Engine::rmv_scene(unsigned id) {
     if (has_scene(id)) { 
-        _propList.erase(id); // Main reason why _propList is a map and not a list.
+        _sceneList.erase(id); // Main reason why _sceneList is a map and not a list.
         return true;
     }
 
@@ -68,12 +68,17 @@ bool Engine::rmv_scene(unsigned id) {
 }
 
 bool Engine::has_scene(unsigned id) {
-    return _propList.find(id) != _propList.end();
+    return _sceneList.find(id) != _sceneList.end();
 }
 
 // Library Core Run
 void Engine::run()
 {
+    for(auto it = _sceneList.begin(); it != _sceneList.end();) {
+        it->second->init(*_win);
+        ++it;
+    }
+
     int i;
     while (_win->isOpen()) {
         sf::Event event;
@@ -85,12 +90,12 @@ void Engine::run()
 
         // if _win is nullpointer or null
 
-        _win->clear(sf::Color::Black);
+        _win->clear(sf::Color::White);
 
-        for (i = 0; i < _propList.size(); i++) {
-
+        for (i = 0; i < _sceneList.size(); i++) {
+            
             if (has_scene(i))
-                _propList[i]->render(_win);
+                _sceneList[i]->render(_win);
         }
 
         _win->display();
