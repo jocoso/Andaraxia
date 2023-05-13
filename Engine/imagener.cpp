@@ -41,7 +41,7 @@
 
 #include "imagener.hpp"
 
-Imagener::Imagener(std::string path) : _img(nullptr),  _spr(nullptr), _path(path) {
+Imagener::Imagener(std::string path) : Aspect("image"), _img(nullptr),  _spr(nullptr), _path(path) {
     locknload();
 }
 
@@ -77,8 +77,10 @@ void Imagener::reset() {
     }
 }
 
-void Imagener::draw(sf::RenderWindow &win) {
-    win.draw(*_spr);
+void Imagener::init(sf::RenderWindow &window) {}
+
+void Imagener::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+    target.draw(*_spr);
 }
 
 Imagener::~Imagener() {

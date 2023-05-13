@@ -41,12 +41,12 @@
 #ifndef IMAGENER_H
 #define IMAGENER_H
 
-#include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
+#include "aspect.hpp"
 
 /*! Creates a standalone image that don't require multiple definitions of texture and sprites */
-class Imagener {
+class Imagener : public Aspect {
 
     private:
     sf::Texture *_img;
@@ -63,12 +63,17 @@ class Imagener {
      */
     void set_image(std::string path);
 
+
     /**
      * @brief Draw the image to the screen
      * 
-     * @param win 
+     * @param target 
+     * @param states 
      */
-    void draw(sf::RenderWindow &win);
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+
+    void init(sf::RenderWindow &window) override;
 
     /**
      * @brief Memory deallocation of img and spr
