@@ -94,7 +94,7 @@ void Engine::run()
 
         for (i = 0; i < _sceneList.size(); i++) {
         
-            if (has_scene(i)) _sceneList[i]->render(_win);
+            if (has_scene(i)) _sceneList[i]->render(*_win, sf::RenderStates::Default);
 
         }
         _win->display();

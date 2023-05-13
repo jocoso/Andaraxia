@@ -106,7 +106,12 @@ public:
      * 
      * @param win Window were to render
     */
-    void render(sf::RenderWindow &win);
+    virtual void render(sf::RenderWindow &win, sf::RenderStates states) {
+        for(auto it = _aspectList.begin(); it != _aspectList.end();) {
+            win.draw(*it->second);
+            ++it;
+        }
+    }
     
     // TODO: Comment
     void init(sf::RenderWindow &win);

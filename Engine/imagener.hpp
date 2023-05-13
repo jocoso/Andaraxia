@@ -72,15 +72,18 @@ class Imagener : public Aspect {
      */
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-
+    // TODO: Comment
     void init(sf::RenderWindow &window) override;
 
     /**
      * @brief Memory deallocation of img and spr
      */
     void reset();
+
+    // TODO: Comment
     void changeSize(float width, float height);
     void changeSize(float size);
+    void setPosition(float posX, float posY);
 
     ~Imagener();
 

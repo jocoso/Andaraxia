@@ -74,13 +74,6 @@ bool Prop::rmv_aspect(unsigned id) {
 
 }
 
-void Prop::render(sf::RenderWindow &win) {
-    for(auto it = _aspectList.begin(); it != _aspectList.end();) {
-        win.draw(*it->second);
-        ++it;
-    }
-}
-
 void Prop::init(sf::RenderWindow &win) {
     for(auto it = _aspectList.begin(); it != _aspectList.end();) {
         it->second->init(win);

@@ -78,9 +78,9 @@ bool Scene::rmv_prop(std::string name) {
     return false;
 }
 
-void Scene::render(sf::RenderWindow *win) {
+void Scene::render(sf::RenderWindow &win, sf::RenderStates states) {
     for(auto it = _propList.begin(); it != _propList.end();) {
-        it->second->render(*win);
+        it->second->render(win, states);
         ++it;
     }
 }

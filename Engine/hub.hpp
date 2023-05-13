@@ -12,9 +12,10 @@ class Hub : public Prop {
         sf::RectangleShape _output;
         sf::RectangleShape _menuBar;
     public:
-        Hub(int id) : Prop("hub", id), _frame("") {}
-        void init(sf::RenderWindow &win) override;
-        void render(sf::RenderWindow &win) override;
+        // FIX: Hub take data singleton
+        Hub(int id) : Prop("hub", id), _frame("C:\\Users\\Josh\\Downloads\\handsomeman.jpg") {}
+        void init(sf::RenderWindow &win);
+        void render(sf::RenderWindow &win, sf::RenderStates states);
 };
 
 #endif // HUB_HPP

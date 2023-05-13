@@ -45,7 +45,6 @@ Imagener::Imagener(std::string path) : Aspect("image"), _img(nullptr),  _spr(nul
     locknload();
 }
 
-
 void Imagener::set_image(std::string path) {
     _path = path;
     locknload();
@@ -99,6 +98,10 @@ void Imagener::changeSize(float size) {
         size/_spr->getLocalBounds().height 
     );
 
+}
+
+void Imagener::setPosition(float posX, float posY) {
+    _spr->setPosition(posX, posY);
 }
 
 Imagener::~Imagener() {

@@ -86,7 +86,7 @@ public:
      * 
      * @param win A pointer to the window where we want the items rendered,
      */
-    void render(sf::RenderWindow *win);
+    void render(sf::RenderWindow &win, sf::RenderStates states);
 
     /**
      * @brief Check if a prop exists inside an scene
