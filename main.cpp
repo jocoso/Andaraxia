@@ -4,9 +4,10 @@
 
 int main() {
     Scene s0;
-
     sf::RenderWindow window(sf::VideoMode(800, 500), "prototype 0.0.0");
     Engine e(&window);
+
+    s0.register_prop("hub");
 
     int i = e.add_scene(&s0);
     

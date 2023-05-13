@@ -53,5 +53,8 @@ $(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(ENGINE_OBJS)
 run:
 	$(BIN_DIR)/$(EXEC).exe 
 
+install:
+	make clean && make
+
 clean:
 	rm -rf bin $(TEST_DIR)/*.o $(TEST_DIR)/*.exe
