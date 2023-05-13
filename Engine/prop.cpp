@@ -39,7 +39,7 @@
  * 
  ***************************************************************************/
 
-#include "./prop.h"
+#include "./prop.hpp"
 
 void Prop::set_name(std::string name) {
     _name = name;

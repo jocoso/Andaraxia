@@ -40,7 +40,8 @@
  ***************************************************************************/
 
 
-#include "engine.h"
+#include "engine.hpp"
+#include "imagener.hpp"
 
 Engine::Engine(sf::RenderWindow *win) {
 
@@ -80,6 +81,8 @@ void Engine::run()
     }
 
     int i;
+    Imagener img("C:\\Users\\Jocoso2218\\Desktop\\cooloutfits.jpg");
+
     while (_win->isOpen()) {
         sf::Event event;
 
@@ -89,15 +92,14 @@ void Engine::run()
         }
 
         // if _win is nullpointer or null
-
         _win->clear(sf::Color::White);
 
         for (i = 0; i < _sceneList.size(); i++) {
-            
-            if (has_scene(i))
-                _sceneList[i]->render(_win);
-        }
+        
+            if (has_scene(i)) _sceneList[i]->render(_win);
 
+        }
+        img.draw(*_win);
         _win->display();
     }
 }

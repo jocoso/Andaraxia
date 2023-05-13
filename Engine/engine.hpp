@@ -39,8 +39,8 @@
  * 
  ***************************************************************************/
 
-#ifndef ENGINE_H
-#define ENGINE_H
+#ifndef ENGINE_HPP
+#define ENGINE_HPP
 
 #include <iostream>
 #include <string>
@@ -49,7 +49,7 @@
 #include <stdexcept>
 #include <SFML/Graphics.hpp>
 
-#include "./scene.h"
+#include "scene.hpp"
 
 /*! Creates and execute all Scenes, menus and other core processes */
 class Engine {
@@ -94,4 +94,4 @@ public:
     void run(void);
 };
 
-#endif // ENGINE_H
+#endif // ENGINE_HPP

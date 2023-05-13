@@ -4,8 +4,8 @@
  * 
  * NAME:            Novella Engine
  * VERSION:         0.1
- * LASTREVISION:    04/08/2023
- * FILENAME:        ./engine/scene.h
+ * LASTREVISION:    04/16/2023
+ * FILENAME:        ./engine/prop.h
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -39,65 +39,80 @@
  * 
  ***************************************************************************/
 
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef PROP_HPP
+#define PROP_HPP
 
+#include <SFML/Graphics.hpp>
 #include <string>
-#include <iostream>
 #include <system_error>
 #include <map>
 #include <stdexcept>
-#include <SFML/Graphics.hpp>
 
-#include "./prop.h"
-#include "./aspect.h"
+#include "aspect.hpp"
 
-/*! Compartmentalize all code to be render and execute it all at once*/
-class Scene {
+/*! A customizable container for everything that requires rendering in a scene */
+class Prop {
 private:
-    std::map<std::string, Prop *> _propList;
-protected:
-    std::string _name;
-    std::string _desc;
+    std::string     _name;
+    unsigned        _id;
+    std::map<unsigned, Aspect *> _aspectList; // Made a map to keep id integrity when erasing
+
 public:
-    Scene();
-    ~Scene();
+    Prop(std::string name, unsigned id) : _name(name), _id(id) {}
 
     /**
-     * @brief Adds a Prop to the list of renderable objects.
+     * @brief Changes the name of the Prop
      * 
-     * @param name the name of prop
-     * @return true if the prop was successfully registered
+     * @param name Name of the prop
      */
-    bool register_prop(std::string name);
+    void set_name(std::string name);
+
+    // TODO: Delete this because the id is something that must be managed internally and never changed by the user
+    void set_id(unsigned id);
+    
+    /**
+     * @brief Get the name of the Prop
+     * 
+     * @return A string representing name of the prop
+     */
+    std::string get_name(void);
 
     /**
-     * @brief Remove a Prop from the list of renderable objects.
+     * @brief Get the id of the Prop
      * 
-     * @param id The id of the Prop to eliminate.
-     * @return true if removal was successful
-     * @return false if removal couldn't be achieved for a reason or another.
+     * @return An unsigned int representing an id of the prop
      */
-    bool rmv_prop(std::string name);
+    unsigned get_id(void);
 
     /**
-     * @brief Renders all items inside the renderable list.
+     * @brief Adds an instance of an Aspect to the prop
      * 
-     * @param win A pointer to the window where we want the items rendered,
+     * @param aspect aspect instance
+     * @return an unsigned int representing the id of the aspect inside the Prop class
      */
-    void render(sf::RenderWindow *win);
+    unsigned add_aspect(Aspect *aspect);
 
     /**
-     * @brief Check if a prop exists inside an scene
+     * @brief Removes an instance of an aspect from the prop
      * 
-     * @param propname the name of the prop we are looking for
-     * @return true if the prop exists
-     * @return false if it doesn't
+     * @param id ID of the instance to be removed
+     * @return true if the instance could be removed successfully
+     * @return false if the instance was already removed from the Prop
      */
-    bool has_prop(std::string name);
+    bool rmv_aspect(unsigned id);
 
-    void add_aspect(std::string name, Aspect *aspect);
-    void init(sf::RenderWindow &window);
+    /**
+     * @brief Renders all the Aspects in the prop
+     * 
+     * @param win Window were to render
+    */
+    void render(sf::RenderWindow &win);
+    
+    // TODO: Add a render method class
+
+    void init(sf::RenderWindow &win);
+protected:
+private:
 };
 
-#endif // SCENE_H
+#endif // PROP_HPP

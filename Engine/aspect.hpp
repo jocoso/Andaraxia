@@ -1,5 +1,5 @@
-#ifndef ASPECT_H
-#define ASPECT_H
+#ifndef ASPECT_HPP
+#define ASPECT_HPP
 
 #include <string>
 #include <SFML/Graphics.hpp>
@@ -13,4 +13,4 @@ class Aspect : public sf::Drawable {
         Aspect(std::string type) : _type(type){}
 };
 
-#endif // ASPECT_H
+#endif // ASPECT_HPP

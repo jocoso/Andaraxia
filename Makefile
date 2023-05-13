@@ -1,4 +1,4 @@
-CFLAGS= 
+CFLAGS= -g -ggdb -Wall -Wextra
 BIN_DIR=./bin
 OBJ_DIR=$(BIN_DIR)/obj
 TEST_DIR=./Test
@@ -31,12 +31,12 @@ test: createDirectories $(ENGINE_OBJS)
 	./$(TEST_DIR)/$(TEST_NAME).exe
 
 # create client object files
-$(OBJ_DIR)/main.o: $(ENGINE_OBJS)
-	$(CC) -c main.cpp $(ENGINE_OBJS) -I$(SFML_INCLUDE) -o $@
+$(OBJ_DIR)/main.o: 
+	$(CC) -c main.cpp $(CFLAGS) -I$(SFML_INCLUDE) -o $@
 
 # create library object files
 $(OBJ_DIR)/%.o: $(ENG_LIBDIR)/%.cpp
-	$(CC) -c $^ -I$(SFML_INCLUDE) -o $@
+	$(CC) -c $^ $(CFLAGS) -I$(SFML_INCLUDE) -o $@
 
 # creates bin iff bin directory does not exists
 $(BIN_DIR):
@@ -48,7 +48,7 @@ $(OBJ_DIR): $(BIN_DIR)
 
 # linking...
 $(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(ENGINE_OBJS)
-	$(CC) $^ -o $@ -L$(SFML_LIB) $(SFML_DESC)
+	$(CC) $^ -o $@ $(CFLAGS) -L$(SFML_LIB) $(SFML_DESC)
 
 run:
 	$(BIN_DIR)/$(EXEC).exe 
