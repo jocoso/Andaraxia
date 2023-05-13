@@ -5,7 +5,7 @@
  * NAME:            Novella Engine
  * VERSION:         0.1
  * LASTREVISION:    04/16/2023
- * FILENAME:        ./engine/prop.cpp
+ * FILENAME:        ./Engine/prop.cpp
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------

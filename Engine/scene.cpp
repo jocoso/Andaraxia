@@ -5,7 +5,7 @@
  * NAME:            Novella Engine
  * VERSION:         0.1
  * LASTREVISION:    04/08/2023
- * FILENAME:        ./engine/scene.cpp
+ * FILENAME:        ./Engine/scene.cpp
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------

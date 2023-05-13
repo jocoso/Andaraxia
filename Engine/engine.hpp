@@ -5,7 +5,7 @@
  * NAME:            Novella Engine
  * VERSION:         0.1
  * LASTREVISION:    04/08/2023
- * FILENAME:        ./engine/engine.h
+ * FILENAME:        ./Engine/engine.h
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
