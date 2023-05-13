@@ -45,6 +45,7 @@ Imagener::Imagener(std::string path) : Aspect("image"), _img(nullptr),  _spr(nul
     locknload();
 }
 
+
 void Imagener::set_image(std::string path) {
     _path = path;
     locknload();
