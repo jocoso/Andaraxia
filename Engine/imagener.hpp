@@ -79,6 +79,8 @@ class Imagener : public Aspect {
      * @brief Memory deallocation of img and spr
      */
     void reset();
+    void changeSize(float width, float height);
+    void changeSize(float size);
 
     ~Imagener();
 

@@ -83,6 +83,23 @@ void Imagener::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(*_spr);
 }
 
+void Imagener::changeSize(float width, float height) {
+    locknload();
+    _spr->setScale(
+        width/_spr->getLocalBounds().width,
+        height/_spr->getLocalBounds().height
+    );
+}
+
+void Imagener::changeSize(float size) {
+
+    _spr->setScale(
+        size/_spr->getLocalBounds().width, 
+        size/_spr->getLocalBounds().height 
+    );
+
+}
+
 Imagener::~Imagener() {
     reset();
 }
