@@ -5,7 +5,7 @@
  * NAME:            Novella Engine
  * VERSION:         0.1
  * LASTREVISION:    04/08/2023
- * FILENAME:        ./engine/scene.cpp
+ * FILENAME:        ./Engine/scene.cpp
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -38,30 +38,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
  ***************************************************************************/
-
-#include "./scene.h"
+#include "./scene.hpp"
 
 Scene::Scene() {}
 Scene::~Scene() {
-
-    std::map<int, Prop*>::iterator itr = _propList.begin();
+    std::map<std::string, Prop*>::iterator itr = _propList.begin();
     for (;itr != _propList.end(); ++itr) {
         delete itr->second;
     }
 }
 
-int Scene::register_prop(std::string name, std::string description) {
-    _propList[_propList.size()] = new Prop(name, description, _propList.size());
-    return _propList.size() -1;
+bool Scene::register_prop(std::string name) {
+    if(!has_prop(name)) {
+        _propList[name] = new Prop(name, _propList.size());
+        return true;
+    }
+
+    return false;
 }
 
-bool Scene::has_prop(unsigned id) {
-    return (_propList.find(id) != _propList.end());
+bool Scene::has_prop(std::string name) {
+    return (_propList.find(name) != _propList.end());
 }
 
-bool Scene::rmv_prop(unsigned id) {
-    if(has_prop(id)) {
-        _propList.erase(id);
+bool Scene::rmv_prop(std::string name) {
+    if(has_prop(name)) {
+        _propList.erase(name);
         return true;
     }
     return false;
@@ -69,7 +71,20 @@ bool Scene::rmv_prop(unsigned id) {
 
 void Scene::render(sf::RenderWindow *win) {
     for(auto it = _propList.begin(); it != _propList.end();) {
-        //std::cout << it->first << " : " << it->second->get_name() << std::endl;
+        it->second->render(*win);
+        ++it;
+    }
+}
+
+void Scene::add_aspect(std::string name, Aspect *aspect) {
+    if(has_prop(name)) {
+        _propList[name]->add_aspect(aspect);
+    }
+}
+
+void Scene::init(sf::RenderWindow &window) {
+    for(auto it = _propList.begin(); it != _propList.end();) {
+        it->second->init(window);
         ++it;
     }
 }

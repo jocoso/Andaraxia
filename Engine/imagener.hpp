@@ -4,8 +4,8 @@
  * 
  * NAME:            Novella Engine
  * VERSION:         0.1
- * LASTREVISION:    04/16/2023
- * FILENAME:        ./Engine/prop.cpp
+ * LASTREVISION:    05/12/2023
+ * FILENAME:        ./Engine/imagener.hpp
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -38,52 +38,57 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
  ***************************************************************************/
+#ifndef IMAGENER_H
+#define IMAGENER_H
 
-#include "./prop.hpp"
+#include <string>
+#include <iostream>
+#include "aspect.hpp"
 
-void Prop::set_name(std::string name) {
-    _name = name;
-}
+/*! Creates a standalone image that don't require multiple definitions of texture and sprites */
+class Imagener : public Aspect {
 
-void Prop::set_id(unsigned id) {
-    _id = id;
-}
+    private:
+    sf::Texture *_img;
+    sf::Sprite  *_spr;
+    std::string _path;
 
-std::string Prop::get_name() {
-    return _name;
-}
+    public:
+    Imagener(std::string path);
 
-unsigned Prop::get_id() {
-    return _id;
-}
+    /**
+     * @brief Set the image path
+     * 
+     * @param path 
+     */
+    void set_image(std::string path);
 
-unsigned Prop::add_aspect(Aspect *aspect) {
-    
-    _aspectList[_aspectList.size()] = aspect;
-    return _aspectList.size() - 1;
 
-}
+    /**
+     * @brief Draw the image to the screen
+     * 
+     * @param target 
+     * @param states 
+     */
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-bool Prop::rmv_aspect(unsigned id) {
 
-    if(_aspectList.find(id) != _aspectList.end()) {  // Found inside the map
-        _aspectList.erase(id);                      
-        return true;
-    }
-    return false;
+    void init(sf::RenderWindow &window) override;
 
-}
+    /**
+     * @brief Memory deallocation of img and spr
+     */
+    void reset();
 
-void Prop::render(sf::RenderWindow &win) {
-    for(auto it = _aspectList.begin(); it != _aspectList.end();) {
-        win.draw(*it->second);
-        ++it;
-    }
-}
+    ~Imagener();
 
-void Prop::init(sf::RenderWindow &win) {
-    for(auto it = _aspectList.begin(); it != _aspectList.end();) {
-        it->second->init(win);
-        ++it;
-    }
-}
+    private:
+    /**
+     * @brief Meat of the class. Delete and reload image.
+     * 
+     */
+    void locknload();
+
+};
+
+#endif // IMAGENER_H

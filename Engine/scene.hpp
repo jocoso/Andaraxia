@@ -4,8 +4,8 @@
  * 
  * NAME:            Novella Engine
  * VERSION:         0.1
- * LASTREVISION:    04/16/2023
- * FILENAME:        ./engine/prop.h
+ * LASTREVISION:    04/08/2023
+ * FILENAME:        ./Engine/scene.h
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -39,83 +39,64 @@
  * 
  ***************************************************************************/
 
-#ifndef PROP_H
-#define PROP_H
+#ifndef SCENE_HPP
+#define SCENE_HPP
 
 #include <string>
+#include <iostream>
 #include <system_error>
 #include <map>
 #include <stdexcept>
+#include <SFML/Graphics.hpp>
 
-/*! A customizable container for everything that requires rendering in a scene */
-class Prop {
+#include "prop.hpp"
+
+/*! Compartmentalize all code to be render and execute it all at once*/
+class Scene {
 private:
-    std::string     _name;
-    std::string     _desc;
-    unsigned        _id;
-    std::map<unsigned, std::string> _aspectList; // Made a map to keep id integrity when erasing
-
-public:
-    Prop(std::string name, std::string description, unsigned id) : _name(name), _desc(description), _id(id) {}
-
-    /**
-     * @brief Changes the name of the Prop
-     * 
-     * @param name Name of the prop
-     */
-    void set_name(std::string name);
-
-    /**
-     * @brief Changes the description of the Prop
-     * 
-     * @param description Description of the prop
-     */
-    void set_description(std::string description);
-
-    // TODO: Delete this because the id is something that must be managed internally and never changed by the user
-    void set_id(unsigned id);
-    
-    /**
-     * @brief Get the name of the Prop
-     * 
-     * @return A string representing name of the prop
-     */
-    std::string get_name(void);
-
-    /**
-     * @brief Get the description of the Prop
-     * 
-     * @return A string representing the description of the prop
-     */
-    std::string get_description(void);
-
-    /**
-     * @brief Get the id of the Prop
-     * 
-     * @return An unsigned int representing an id of the prop
-     */
-    unsigned get_id(void);
-
-    /**
-     * @brief Adds an instance of an Aspect to the prop
-     * 
-     * @param aspectname aspect instance
-     * @return an unsigned int representing the id of the aspect inside the Prop class
-     */
-    unsigned add_aspect(std::string aspectname);
-
-    /**
-     * @brief Removes an instance of an aspect from the prop
-     * 
-     * @param id ID of the instance to be removed
-     * @return true if the instance could be removed successfully
-     * @return false if the instance was already removed from the Prop
-     */
-    bool rmv_aspect(unsigned id);
-    
-    // TODO: Add a render method class
+    std::map<std::string, Prop *> _propList;
 protected:
-private:
+    std::string _name;
+    std::string _desc;
+public:
+    Scene();
+    ~Scene();
+
+    /**
+     * @brief Adds a Prop to the list of renderable objects.
+     * 
+     * @param name the name of prop
+     * @return true if the prop was successfully registered
+     */
+    bool register_prop(std::string name);
+
+    /**
+     * @brief Remove a Prop from the list of renderable objects.
+     * 
+     * @param id The id of the Prop to eliminate.
+     * @return true if removal was successful
+     * @return false if removal couldn't be achieved for a reason or another.
+     */
+    bool rmv_prop(std::string name);
+
+    /**
+     * @brief Renders all items inside the renderable list.
+     * 
+     * @param win A pointer to the window where we want the items rendered,
+     */
+    void render(sf::RenderWindow *win);
+
+    /**
+     * @brief Check if a prop exists inside an scene
+     * 
+     * @param propname the name of the prop we are looking for
+     * @return true if the prop exists
+     * @return false if it doesn't
+     */
+    bool has_prop(std::string name);
+
+    void add_aspect(std::string name, Aspect *aspect);
+    void init(sf::RenderWindow &window);
 };
 
-#endif // PROP_H
+#endif // SCENE_HPP

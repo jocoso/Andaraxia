@@ -4,8 +4,8 @@
  * 
  * NAME:            Novella Engine
  * VERSION:         0.1
- * LASTREVISION:    04/08/2023
- * FILENAME:        ./engine/engine.h
+ * LASTREVISION:    05/12/2023
+ * FILENAME:        ./Engine/aspect.hpp
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -39,59 +39,41 @@
  * 
  ***************************************************************************/
 
-#ifndef ENGINE_H
-#define ENGINE_H
+#ifndef ASPECT_HPP
+#define ASPECT_HPP
 
-#include <iostream>
 #include <string>
-#include <system_error>
-#include <map>
-#include <stdexcept>
 #include <SFML/Graphics.hpp>
 
-#include "./scene.h"
+/*! Adds a functionality to props. Aspects are small programable features that runs independently
+inside a prop. */
+class Aspect : public sf::Drawable {
+    protected:
+        std::string _type;
+    public:
 
-/*! Creates and execute all Scenes, menus and other core processes */
-class Engine {
-private:
-    std::map<int, Scene*> _propList; // Made a map to keep id integrity when erasing
-    sf::RenderWindow *_win = nullptr;
-public:
-    Engine(sf::RenderWindow *_win);
+        /**
+         * @brief Any drawing should be done in this function.
+         * 
+         * @param target Where to draw.
+         * @param states 
+         */
+        void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;
 
-    /**
-     * @brief Adds an instance of Scene to the Engine for it to execute
-     * 
-     * @param prop An Scene to display
-     * @return int Id of the given scene needed to access it inside Engine
-     */
-    int add_scene(Scene *scene);
+        // TODO: Instead of window, it should be a Data Singleton passed.
+        /**
+         * @brief Any initialization should be done in this function.
+         * 
+         * @param window 
+         */
+        virtual void init(sf::RenderWindow &window) = 0;
 
-    /**
-     * @brief Removes an instance of Scene from the Engine list
-     * 
-     * @param id The id of the scene to eliminate.
-     * @return true if removal was successful
-     * @return false if removal couldn't be achieved for a reason or another
-     */
-    bool rmv_scene(unsigned id);
-
-    /**
-     * @brief Check if an scene exists in the Engine list.
-     * 
-     * @param id id of the scene to look for.
-     * @return true if the scene is in the list,
-     * @return false otherwise.
-     */
-    bool has_scene(unsigned id);
-
-
-
-    /**
-     * @brief Open the main window and 
-     * render every scene on it.
-     */
-    void run(void);
+        /**
+         * @brief Construct a new Aspect object
+         * 
+         * @param type The category of Aspect (helps with organization)
+         */
+        Aspect(std::string type) : _type(type){}
 };
 
-#endif // ENGINE_H
+#endif // ASPECT_HPP

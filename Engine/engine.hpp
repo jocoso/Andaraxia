@@ -4,8 +4,8 @@
  * 
  * NAME:            Novella Engine
  * VERSION:         0.1
- * LASTREVISION:    04/16/2023
- * FILENAME:        ./Engine/prop.cpp
+ * LASTREVISION:    04/08/2023
+ * FILENAME:        ./Engine/engine.h
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -39,51 +39,59 @@
  * 
  ***************************************************************************/
 
-#include "./prop.hpp"
+#ifndef ENGINE_HPP
+#define ENGINE_HPP
 
-void Prop::set_name(std::string name) {
-    _name = name;
-}
+#include <iostream>
+#include <string>
+#include <system_error>
+#include <map>
+#include <stdexcept>
+#include <SFML/Graphics.hpp>
 
-void Prop::set_id(unsigned id) {
-    _id = id;
-}
+#include "scene.hpp"
 
-std::string Prop::get_name() {
-    return _name;
-}
+/*! Creates and execute all Scenes, menus and other core processes */
+class Engine {
+private:
+    std::map<int, Scene*> _sceneList; // Made a map to keep id integrity when erasing
+    sf::RenderWindow *_win = nullptr;
+public:
+    Engine(sf::RenderWindow *_win);
 
-unsigned Prop::get_id() {
-    return _id;
-}
+    /**
+     * @brief Adds an instance of Scene to the Engine for it to execute
+     * 
+     * @param prop An Scene to display
+     * @return int Id of the given scene needed to access it inside Engine
+     */
+    int add_scene(Scene *scene);
 
-unsigned Prop::add_aspect(Aspect *aspect) {
-    
-    _aspectList[_aspectList.size()] = aspect;
-    return _aspectList.size() - 1;
+    /**
+     * @brief Removes an instance of Scene from the Engine list
+     * 
+     * @param id The id of the scene to eliminate.
+     * @return true if removal was successful
+     * @return false if removal couldn't be achieved for a reason or another
+     */
+    bool rmv_scene(unsigned id);
 
-}
+    /**
+     * @brief Check if an scene exists in the Engine list.
+     * 
+     * @param id id of the scene to look for.
+     * @return true if the scene is in the list,
+     * @return false otherwise.
+     */
+    bool has_scene(unsigned id);
 
-bool Prop::rmv_aspect(unsigned id) {
 
-    if(_aspectList.find(id) != _aspectList.end()) {  // Found inside the map
-        _aspectList.erase(id);                      
-        return true;
-    }
-    return false;
 
-}
+    /**
+     * @brief Open the main window and 
+     * render every scene on it.
+     */
+    void run(void);
+};
 
-void Prop::render(sf::RenderWindow &win) {
-    for(auto it = _aspectList.begin(); it != _aspectList.end();) {
-        win.draw(*it->second);
-        ++it;
-    }
-}
-
-void Prop::init(sf::RenderWindow &win) {
-    for(auto it = _aspectList.begin(); it != _aspectList.end();) {
-        it->second->init(win);
-        ++it;
-    }
-}
+#endif // ENGINE_HPP

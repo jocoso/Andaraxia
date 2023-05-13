@@ -4,8 +4,8 @@
  * 
  * NAME:            Novella Engine
  * VERSION:         0.1
- * LASTREVISION:    04/08/2023
- * FILENAME:        ./engine/scene.h
+ * LASTREVISION:    05/12/2023
+ * FILENAME:        ./Engine/imagener.cpp
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -39,61 +39,50 @@
  * 
  ***************************************************************************/
 
-#ifndef SCENE_H
-#define SCENE_H
+#include "imagener.hpp"
 
-#include <string>
-#include <iostream>
-#include <system_error>
-#include <map>
-#include <stdexcept>
-#include <SFML/Graphics.hpp>
+Imagener::Imagener(std::string path) : Aspect("image"), _img(nullptr),  _spr(nullptr), _path(path) {
+    locknload();
+}
 
-#include "./prop.h"
+void Imagener::set_image(std::string path) {
+    _path = path;
+    locknload();
+}
 
-/*! Compartmentalize all code to be render and execute it all at once*/
-class Scene {
-private:
-    std::map<int, Prop *> _propList;
-protected:
-    std::string _name;
-    std::string _desc;
-public:
-    Scene();
-    ~Scene();
+void Imagener::locknload() {
+    
+    reset();
 
-    /**
-     * @brief Adds a Prop to the list of renderable objects.
-     * 
-     * @param placeholdername test parameter
-     * @return int Id of the given prop needed to access it inside Scene
-     */
-    int register_prop(std::string name, std::string description);
+    _img = new sf::Texture();
+    _spr = new sf::Sprite();
 
-    /**
-     * @brief Remove a Prop from the list of renderable objects.
-     * 
-     * @param id The id of the Prop to eliminate.
-     * @return true if removal was successful
-     * @return false if removal couldn't be achieved for a reason or another.
-     */
-    bool rmv_prop(unsigned id);
+    if(!_img->loadFromFile(_path)) { 
+        std::cout << "Not able to make image into sprite" << std::endl;
+        exit(-1);
+    }
 
-    /**
-     * @brief Renders all items inside the renderable list.
-     * 
-     * @param win A pointer to the window where we want the items rendered,
-     */
-    void render(sf::RenderWindow *win);
+    _spr->setTexture(*_img);
+}
 
-    /**
-     * @brief Check if a prop exists inside an scene
-     * 
-     * @param propname the name of the prop we are looking for
-     * @return true if the prop exists
-     * @return false if it doesn't
-     */
-    bool has_prop(unsigned id);
-};
+void Imagener::reset() {
+    if(_img != nullptr) {
+        delete(_img);
+        _img = nullptr;
+    }
 
-#endif // SCENE_H
+    if(_spr != nullptr) {
+        delete(_spr);
+        _spr = nullptr;
+    }
+}
+
+void Imagener::init(sf::RenderWindow &window) {}
+
+void Imagener::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+    target.draw(*_spr);
+}
+
+Imagener::~Imagener() {
+    reset();
+}
