@@ -70,6 +70,8 @@ public:
      */
     bool register_prop(std::string name);
 
+    bool register_prop(Prop *prop);
+
     /**
      * @brief Remove a Prop from the list of renderable objects.
      * 

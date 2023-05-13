@@ -57,6 +57,15 @@ bool Scene::register_prop(std::string name) {
     return false;
 }
 
+bool Scene::register_prop(Prop *prop) {
+    if(!has_prop(prop->get_name())) {
+        _propList[prop->get_name()] = prop;
+        return true;
+    }
+
+    return false;
+}
+
 bool Scene::has_prop(std::string name) {
     return (_propList.find(name) != _propList.end());
 }
