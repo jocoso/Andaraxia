@@ -4,6 +4,6 @@
 
 ## INSTALLATION
 ------------------
-`make`
+`make install`
 </br>
 `./bin/andaraxia.exe`
