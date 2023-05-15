@@ -80,3 +80,4 @@ void Prop::init(sf::RenderWindow &win) {
         ++it;
     }
 }
+

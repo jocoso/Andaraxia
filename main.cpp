@@ -5,7 +5,7 @@
 
 int main() {
     Scene s0;
-    sf::RenderWindow window(sf::VideoMode(800, 500), "prototype 0.0.0");
+    sf::RenderWindow window(sf::VideoMode(800, 700), "prototype 0.0.0");
     Engine e(&window);
     
     Hub hub(-1);
@@ -13,7 +13,7 @@ int main() {
 
     s0.register_prop(pHub);
 
-    int i = e.add_scene(&s0);
+    e.add_scene(&s0);
     
     e.run();
     return 0;

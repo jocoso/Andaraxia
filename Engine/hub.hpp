@@ -13,7 +13,7 @@ class Hub : public Prop {
         sf::RectangleShape _menuBar;
     public:
         // FIX: Hub take data singleton
-        Hub(int id) : Prop("hub", id), _frame("C:\\Users\\Josh\\Downloads\\handsomeman.jpg") {}
+        Hub(int id) : Prop("hub", id), _frame("./assets/waterfalls.jpg") {}
         void init(sf::RenderWindow &win);
         void render(sf::RenderWindow &win, sf::RenderStates states);
 };

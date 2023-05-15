@@ -59,6 +59,7 @@ private:
 
 public:
     Prop(std::string name, unsigned id) : _name(name), _id(id) {}
+    virtual ~Prop() {}
 
     /**
      * @brief Changes the name of the Prop
@@ -114,7 +115,9 @@ public:
     }
     
     // TODO: Comment
-    void init(sf::RenderWindow &win);
+    virtual void init(sf::RenderWindow &win);
+
+    
 protected:
 private:
 };
