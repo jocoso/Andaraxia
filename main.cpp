@@ -1,20 +1,15 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "Engine/engine.hpp"
-#include "Engine/imagener.hpp"
 #include "Engine/hub.hpp"
+#include "Engine/datareader.hpp"
 
 int main() {
-    Scene s0;
+    DataReader* dr = DataReader::getData("./data/data.nva");
     sf::RenderWindow window(sf::VideoMode(800, 700), "prototype 0.0.0");
-    Engine e(&window);
     
-    Hub hub(-1);
-    Prop *pHub = &hub;
-
-    s0.register_prop(pHub);
-
-    e.add_scene(&s0);
-    
+    Engine e(&window, dr);
     e.run();
+
     return 0;
 }

@@ -5,10 +5,9 @@ TEST_DIR=./Test
 
 CC = g++
 
-CLIENT_DIR=./Client
-
 ENG_LIBDIR=./Engine
 
+NLOHMANN_INCLUDE = ./libraries/json/include
 SFML_INCLUDE=./libraries/SFML-2.5.1/include
 SFML_LIB=./libraries/SFML-2.5.1/lib
 SFML_DESC=-lsfml-graphics -lsfml-window -lsfml-system
@@ -32,11 +31,11 @@ test: createDirectories $(ENGINE_OBJS)
 
 # create client object files
 $(OBJ_DIR)/main.o: 
-	$(CC) -c main.cpp $(CFLAGS) -I$(SFML_INCLUDE) -o $@
+	$(CC) -c main.cpp $(CFLAGS) -I$(SFML_INCLUDE) -I$(NLOHMANN_INCLUDE) -o $@
 
 # create library object files
 $(OBJ_DIR)/%.o: $(ENG_LIBDIR)/%.cpp
-	$(CC) -c $^ $(CFLAGS) -I$(SFML_INCLUDE) -o $@
+	$(CC) -c $^ $(CFLAGS) -I$(SFML_INCLUDE) -I$(NLOHMANN_INCLUDE) -o $@
 
 # creates bin iff bin directory does not exists
 $(BIN_DIR):

@@ -42,45 +42,21 @@
 
 #include "engine.hpp"
 
-Engine::Engine(sf::RenderWindow *win) {
+Engine::Engine(sf::RenderWindow *win, DataReader *dr) {
 
     // Sanity Check if not window
-    if (win == nullptr || win == NULL) {
+    if (win == nullptr || win == NULL || dr == nullptr || dr == NULL) {
         throw std::invalid_argument("KRAK_ERR: INVALID WINDOW _WIN");
     }
 
     _win = win;
+    _dr = dr;
 
-}
-
-int Engine::add_scene(Scene *scene) {
-    _sceneList[_sceneList.size()] = scene;
-    return _sceneList.size() - 1;
-}
-
-bool Engine::rmv_scene(unsigned id) {
-    if (has_scene(id)) { 
-        _sceneList.erase(id); // Main reason why _sceneList is a map and not a list.
-        return true;
-    }
-
-    return false;
-}
-
-bool Engine::has_scene(unsigned id) {
-    return _sceneList.find(id) != _sceneList.end();
 }
 
 // Library Core Run
 void Engine::run()
 {
-    for(auto it = _sceneList.begin(); it != _sceneList.end();) {
-        it->second->init(*_win);
-        ++it;
-    }
-
-    int i;
-
     while (_win->isOpen()) {
         sf::Event event;
 
@@ -91,12 +67,6 @@ void Engine::run()
 
         // if _win is nullpointer or null
         _win->clear(sf::Color::White);
-
-        for (i = 0; i < _sceneList.size(); i++) {
-        
-            if (has_scene(i)) _sceneList[i]->render(*_win, sf::RenderStates::Default);
-
-        }
         _win->display();
     }
 }
