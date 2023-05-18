@@ -62,6 +62,10 @@ Engine::Engine(sf::RenderWindow *win, DataReader *dr) {
 
 }
 
+Engine::~Engine() {
+    if(_curr_prop != nullptr) delete _curr_prop;
+}
+
 // Library Core Run
 void Engine::run()
 {

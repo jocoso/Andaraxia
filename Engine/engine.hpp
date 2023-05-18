@@ -60,6 +60,7 @@ private:
 public:
     Engine(sf::RenderWindow *_win, DataReader *dr);
     // TODO: Get 
+    ~Engine();
 
     /**
      * @brief Open the main window and 

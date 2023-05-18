@@ -95,7 +95,7 @@ public:
     /**
      * @brief Renders all the Aspects in the prop
      * 
-     * @param win Window were to render
+     * @param win Target window where to render.
     */
     virtual void render(sf::RenderWindow &win) {
         for(auto it = _aspectList.begin(); it != _aspectList.end();) {
@@ -104,12 +104,12 @@ public:
         }
     }
     
-    // TODO: Comment
+    /**
+     * @brief Called before rendering. Initialize all needed variables.
+     * 
+     * @param win Window used
+     */
     virtual void init(sf::RenderWindow &win);
-
-    
-protected:
-private:
 };
 
 #endif // PROP_HPP
