@@ -53,12 +53,11 @@
 /*! A customizable container for everything that requires rendering in a scene */
 class Prop {
 private:
-    std::string     _name;
-    unsigned        _id;
+    std::string                  _name;
     std::map<unsigned, Aspect *> _aspectList; // Made a map to keep id integrity when erasing
 
 public:
-    Prop(std::string name, unsigned id) : _name(name), _id(id) {}
+    Prop(std::string name) :  _name(name) {}
     virtual ~Prop() {}
 
     /**
@@ -67,23 +66,14 @@ public:
      * @param name Name of the prop
      */
     void set_name(std::string name);
-
-    // TODO: Delete this because the id is something that must be managed internally and never changed by the user
-    void set_id(unsigned id);
     
     /**
-     * @brief Get the name of the Prop
      * 
+     * @brief Get the name of the Prop
      * @return A string representing name of the prop
+     * 
      */
     std::string get_name(void);
-
-    /**
-     * @brief Get the id of the Prop
-     * 
-     * @return An unsigned int representing an id of the prop
-     */
-    unsigned get_id(void);
 
     /**
      * @brief Adds an instance of an Aspect to the prop
@@ -107,7 +97,7 @@ public:
      * 
      * @param win Window were to render
     */
-    virtual void render(sf::RenderWindow &win, sf::RenderStates states) {
+    virtual void render(sf::RenderWindow &win) {
         for(auto it = _aspectList.begin(); it != _aspectList.end();) {
             win.draw(*it->second);
             ++it;

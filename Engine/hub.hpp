@@ -5,6 +5,14 @@
 #include "imagener.hpp"
 
 // TODO: Comment
+
+struct Point {
+    std::string id;
+    std::string type;
+    std::string title;
+    std::string desc;
+};
+
 class Hub : public Prop {
     private:
         sf::RectangleShape _inputMenu;
@@ -15,13 +23,14 @@ class Hub : public Prop {
 
     public:
         // FIX: Hub take data singleton
-        Hub(int id) : 
-            Prop("hub", id), 
+        Hub() : 
+            Prop("hub"),
             _frame("./assets/waterfalls.jpg")
             {}
 
         void init(sf::RenderWindow &win);
-        void render(sf::RenderWindow &win, sf::RenderStates states);
+        void change_point(Point &pt);
+        void render(sf::RenderWindow &win) override;
 };
 
 #endif // HUB_HPP

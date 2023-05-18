@@ -49,7 +49,6 @@
 #include <stdexcept>
 #include <SFML/Graphics.hpp>
 
-#include "scene.hpp"
 #include "datareader.hpp"
 
 /*! Creates and execute all Scenes, menus and other core processes */
@@ -57,8 +56,10 @@ class Engine {
 private:
     sf::RenderWindow *_win = nullptr;
     DataReader *_dr = nullptr;
+    Prop *_curr_prop;
 public:
     Engine(sf::RenderWindow *_win, DataReader *dr);
+    // TODO: Get 
 
     /**
      * @brief Open the main window and 

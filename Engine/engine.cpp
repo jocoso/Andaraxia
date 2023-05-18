@@ -41,6 +41,7 @@
 
 
 #include "engine.hpp"
+#include "hub.hpp"
 
 Engine::Engine(sf::RenderWindow *win, DataReader *dr) {
 
@@ -52,11 +53,20 @@ Engine::Engine(sf::RenderWindow *win, DataReader *dr) {
     _win = win;
     _dr = dr;
 
+    Hub *hub = new Hub();
+    hub->change_point(_dr->getPoint("marakshouse"));
+
+    _curr_prop = hub;
+
+    hub = nullptr;
+
 }
 
 // Library Core Run
 void Engine::run()
 {
+    _curr_prop->init(*_win);
+
     while (_win->isOpen()) {
         sf::Event event;
 
@@ -67,6 +77,7 @@ void Engine::run()
 
         // if _win is nullpointer or null
         _win->clear(sf::Color::White);
+        _curr_prop->render(*_win);
         _win->display();
     }
 }

@@ -1,4 +1,4 @@
-CFLAGS= -g -ggdb -Wall -Wextra
+CFLAGS= -g -ggdb
 BIN_DIR=./bin
 OBJ_DIR=$(BIN_DIR)/obj
 TEST_DIR=./Test

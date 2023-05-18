@@ -7,6 +7,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "hub.hpp"
+
 using json = nlohmann::json;
 
 class DataReader {
@@ -18,15 +20,16 @@ class DataReader {
         std::string _datapath;
         json _data;
         DataReader(const std::string datapath): _datapath(datapath) {
-            std::ifstream f(_datapath);
-            _data = json::parse(f);
+            update();
         }
+        void update();
         ~DataReader() {}
     
     public:
         DataReader(DataReader &other) = delete;
         void operator=(const DataReader &) = delete;
         static DataReader *getData(const std::string& value);
+        Point &getPoint(std::string id);
         std::string datapath() const {
             return _datapath;
         }

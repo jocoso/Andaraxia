@@ -1,5 +1,7 @@
 #include "hub.hpp"
 
+
+
 void Hub::init(sf::RenderWindow &win) {
 
     // INPUT MENU
@@ -44,10 +46,14 @@ void Hub::init(sf::RenderWindow &win) {
 
 }
 
-void Hub::render(sf::RenderWindow &win, sf::RenderStates states) {
+void Hub::render(sf::RenderWindow &win) {
     win.draw(_inputMenu);
-    _frame.draw(win, states);
+    win.draw(_frame);
     win.draw(_placeName);
     win.draw(_output);
     win.draw(_menuBar);
+}
+
+void Hub::change_point(Point &scn) {
+
 }

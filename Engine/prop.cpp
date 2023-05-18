@@ -45,16 +45,8 @@ void Prop::set_name(std::string name) {
     _name = name;
 }
 
-void Prop::set_id(unsigned id) {
-    _id = id;
-}
-
 std::string Prop::get_name() {
     return _name;
-}
-
-unsigned Prop::get_id() {
-    return _id;
 }
 
 unsigned Prop::add_aspect(Aspect *aspect) {
