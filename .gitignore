@@ -10,4 +10,7 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
-bin/*
+
+# Tests and output files
+bin/
+Test/

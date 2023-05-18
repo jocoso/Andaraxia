@@ -4,8 +4,8 @@
  * 
  * NAME:            Novella Engine
  * VERSION:         0.1
- * LASTREVISION:    04/08/2023
- * FILENAME:        ./Engine/scene.cpp
+ * LASTREVISION:    05/18/2023
+ * FILENAME:        ./Engine/datareader.cpp
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -38,53 +38,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
  ***************************************************************************/
-#include "./scene.hpp"
+#include "datareader.hpp"
 
-Scene::Scene() {}
-Scene::~Scene() {
-    std::map<std::string, Prop*>::iterator itr = _propList.begin();
-    for (;itr != _propList.end(); ++itr) {
-        delete itr->second;
-    }
-}
+DataReader *DataReader::_pInstance{nullptr};
+std::mutex DataReader::_mutex;
 
-bool Scene::register_prop(std::string name) {
-    if(!has_prop(name)) {
-        _propList[name] = new Prop(name, _propList.size());
-        return true;
+DataReader *DataReader::getData(const std::string &datapath) { // Singleton creates instance here
+    std::lock_guard<std::mutex> lock(_mutex); // Making sure no more than one instance was created
+
+    if(_pInstance == nullptr) {
+        _pInstance = new DataReader(datapath);
     }
 
-    return false;
+    return _pInstance;
 }
 
-bool Scene::has_prop(std::string name) {
-    return (_propList.find(name) != _propList.end());
+void DataReader::update() {
+    // Add Sanity Check
+    std::ifstream f(_datapath);
+    _data = json::parse(f);
 }
 
-bool Scene::rmv_prop(std::string name) {
-    if(has_prop(name)) {
-        _propList.erase(name);
-        return true;
+Point &DataReader::getPoint(std::string id) {
+    update();
+    Point r;
+    
+    for(long long unsigned int i = 0; i < _data.at("points").size(); i++) {
+        if(_data.at("points").at(i).at("id") == id) {
+  
+            r.id = _data.at("points").at(i).at("id");
+            r.type = _data.at("points").at(i).at("type");
+            r.title = _data.at("points").at(i).at("title");
+            r.desc = _data.at("points").at(i).at("desc");
+
+        }
     }
-    return false;
-}
 
-void Scene::render(sf::RenderWindow *win) {
-    for(auto it = _propList.begin(); it != _propList.end();) {
-        it->second->render(*win);
-        ++it;
-    }
-}
-
-void Scene::add_aspect(std::string name, Aspect *aspect) {
-    if(has_prop(name)) {
-        _propList[name]->add_aspect(aspect);
-    }
-}
-
-void Scene::init(sf::RenderWindow &window) {
-    for(auto it = _propList.begin(); it != _propList.end();) {
-        it->second->init(window);
-        ++it;
-    }
+    return r;
 }

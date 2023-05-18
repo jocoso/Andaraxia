@@ -4,8 +4,8 @@
  * 
  * NAME:            Novella Engine
  * VERSION:         0.1
- * LASTREVISION:    04/08/2023
- * FILENAME:        ./Engine/scene.h
+ * LASTREVISION:    05/18/2023
+ * FILENAME:        ./Engine/datareader.hpp
  * AUTHOR:          Joshua Collado
  * 
  * ------------------------------------------------------------------------------
@@ -38,65 +38,77 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
  ***************************************************************************/
-
-#ifndef SCENE_HPP
-#define SCENE_HPP
+#ifndef DATA_READER_HPP
+#define DATA_READER_HPP
 
 #include <string>
+#include <mutex>
+#include <nlohmann/json.hpp>
+#include <fstream>
 #include <iostream>
-#include <system_error>
-#include <map>
-#include <stdexcept>
-#include <SFML/Graphics.hpp>
 
-#include "prop.hpp"
+#include "hub.hpp"
 
-/*! Compartmentalize all code to be render and execute it all at once*/
-class Scene {
-private:
-    std::map<std::string, Prop *> _propList;
-protected:
-    std::string _name;
-    std::string _desc;
-public:
-    Scene();
-    ~Scene();
+using json = nlohmann::json;
 
-    /**
-     * @brief Adds a Prop to the list of renderable objects.
-     * 
-     * @param name the name of prop
-     * @return true if the prop was successfully registered
-     */
-    bool register_prop(std::string name);
+/*! Create Data from .nva file */
+class DataReader {
+    private:
+        static DataReader* _pInstance;
+        static std::mutex _mutex;
 
-    /**
-     * @brief Remove a Prop from the list of renderable objects.
-     * 
-     * @param id The id of the Prop to eliminate.
-     * @return true if removal was successful
-     * @return false if removal couldn't be achieved for a reason or another.
-     */
-    bool rmv_prop(std::string name);
+    protected:
+        std::string _datapath;
+        json _data;
 
-    /**
-     * @brief Renders all items inside the renderable list.
-     * 
-     * @param win A pointer to the window where we want the items rendered,
-     */
-    void render(sf::RenderWindow *win);
+        /**
+         * @brief Construct a new Data Reader object
+         * 
+         * @param datapath the path to the .nva file
+         */
+        DataReader(const std::string datapath): _datapath(datapath) {
+            update();
+        }
 
-    /**
-     * @brief Check if a prop exists inside an scene
-     * 
-     * @param propname the name of the prop we are looking for
-     * @return true if the prop exists
-     * @return false if it doesn't
-     */
-    bool has_prop(std::string name);
+        /**
+         * @brief Update content from .nva file
+         */
+        void update();
 
-    void add_aspect(std::string name, Aspect *aspect);
-    void init(sf::RenderWindow &window);
+        /**
+         * @brief Destroy the Data Reader object
+         */
+        ~DataReader() {}
+    
+    public:
+        // Deleting unneeded features
+        DataReader(DataReader &other) = delete;
+        void operator=(const DataReader &) = delete;
+
+        /**
+         * @brief Get the Data object 
+         * 
+         * @param value the path to the .nva file
+         * @return DataReader* 
+         */
+        static DataReader *getData(const std::string& value);
+
+        /**
+         * @brief Get a Point object
+         * 
+         * @param id name of the data we are looking for
+         * @return Point& 
+         */
+        Point &getPoint(std::string id);
+
+        /**
+         * @brief Return the path given
+         * 
+         * @return std::string 
+         */
+        std::string datapath() const {
+            return _datapath;
+        }
 };
 
-#endif // SCENE_HPP
+#endif // DATA_READER_HPP

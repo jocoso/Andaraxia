@@ -45,16 +45,8 @@ void Prop::set_name(std::string name) {
     _name = name;
 }
 
-void Prop::set_id(unsigned id) {
-    _id = id;
-}
-
 std::string Prop::get_name() {
     return _name;
-}
-
-unsigned Prop::get_id() {
-    return _id;
 }
 
 unsigned Prop::add_aspect(Aspect *aspect) {
@@ -74,16 +66,10 @@ bool Prop::rmv_aspect(unsigned id) {
 
 }
 
-void Prop::render(sf::RenderWindow &win) {
-    for(auto it = _aspectList.begin(); it != _aspectList.end();) {
-        win.draw(*it->second);
-        ++it;
-    }
-}
-
 void Prop::init(sf::RenderWindow &win) {
     for(auto it = _aspectList.begin(); it != _aspectList.end();) {
         it->second->init(win);
         ++it;
     }
 }
+

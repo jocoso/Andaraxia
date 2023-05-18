@@ -1,9 +1,9 @@
 # Andaraxia
 
-![Screenshot (13)](https://user-images.githubusercontent.com/11726211/236872106-d089ca7e-3833-47c4-b6b0-3dd60b966ed9.png)
+![Screenshot (14)](https://github.com/jocoso/Andaraxia/assets/11726211/6f517d9c-cc89-4363-bada-09b39a951516)
 
 ## INSTALLATION
 ------------------
-`make`
+`make install`
 </br>
 `./bin/andaraxia.exe`

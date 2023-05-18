@@ -49,43 +49,18 @@
 #include <stdexcept>
 #include <SFML/Graphics.hpp>
 
-#include "scene.hpp"
+#include "datareader.hpp"
 
 /*! Creates and execute all Scenes, menus and other core processes */
 class Engine {
 private:
-    std::map<int, Scene*> _sceneList; // Made a map to keep id integrity when erasing
     sf::RenderWindow *_win = nullptr;
+    DataReader *_dr = nullptr;
+    Prop *_curr_prop;
 public:
-    Engine(sf::RenderWindow *_win);
-
-    /**
-     * @brief Adds an instance of Scene to the Engine for it to execute
-     * 
-     * @param prop An Scene to display
-     * @return int Id of the given scene needed to access it inside Engine
-     */
-    int add_scene(Scene *scene);
-
-    /**
-     * @brief Removes an instance of Scene from the Engine list
-     * 
-     * @param id The id of the scene to eliminate.
-     * @return true if removal was successful
-     * @return false if removal couldn't be achieved for a reason or another
-     */
-    bool rmv_scene(unsigned id);
-
-    /**
-     * @brief Check if an scene exists in the Engine list.
-     * 
-     * @param id id of the scene to look for.
-     * @return true if the scene is in the list,
-     * @return false otherwise.
-     */
-    bool has_scene(unsigned id);
-
-
+    Engine(sf::RenderWindow *_win, DataReader *dr);
+    // TODO: Get 
+    ~Engine();
 
     /**
      * @brief Open the main window and 
