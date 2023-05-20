@@ -1,2 +1,3 @@
-[submodules "./libraries/json/"]
-	ignore = dirty
+[submodule "libraries/json"]
+	path = libraries/json
+	url = git@github.com:nlohmann/json.git
