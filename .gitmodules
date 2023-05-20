@@ -1,2 +1,2 @@
-[submodules "/libraries/json/"]
-	ignore = untracked
+[submodules "./libraries/json/"]
+	ignore = dirty
