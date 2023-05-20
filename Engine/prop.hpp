@@ -107,7 +107,7 @@ public:
     /**
      * @brief Called before rendering. Initialize all needed variables.
      * 
-     * @param win Window used
+     * @param win Window used to render
      */
     virtual void init(sf::RenderWindow &win);
 };

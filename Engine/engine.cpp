@@ -43,23 +43,16 @@
 #include "engine.hpp"
 #include "hub.hpp"
 
-Engine::Engine(sf::RenderWindow *win, DataReader *dr) {
+Engine::Engine(sf::RenderWindow *win, DataReader *dr) : _curr_prop(nullptr), _win(win), _dr(dr) {
 
     // Sanity Check if not window
     if (win == nullptr || win == NULL || dr == nullptr || dr == NULL) {
         throw std::invalid_argument("KRAK_ERR: INVALID WINDOW _WIN");
     }
 
-    _win = win;
-    _dr = dr;
-
-    Hub *hub = new Hub();
-    hub->change_point(_dr->getPoint("marakshouse"));
-
-    _curr_prop = hub;
-
-    hub = nullptr;
-
+    // TEST: points work
+    Point pt = _dr->getPoint("marakshouse");
+    _curr_prop = _dr->point2prop(pt);
 }
 
 Engine::~Engine() {
@@ -69,7 +62,8 @@ Engine::~Engine() {
 // Library Core Run
 void Engine::run()
 {
-    _curr_prop->init(*_win);
+    // Initializing main prop
+    if(_curr_prop != nullptr) _curr_prop->init(*_win);
 
     while (_win->isOpen()) {
         sf::Event event;
@@ -81,7 +75,7 @@ void Engine::run()
 
         // if _win is nullpointer or null
         _win->clear(sf::Color::White);
-        _curr_prop->render(*_win);
+        if(_curr_prop != nullptr) _curr_prop->render(*_win);
         _win->display();
     }
 }

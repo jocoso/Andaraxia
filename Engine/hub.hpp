@@ -13,6 +13,8 @@ struct Point {
     std::string desc;
 };
 
+
+// TODO: Comment
 class Hub : public Prop {
     private:
         sf::RectangleShape _inputMenu;
@@ -25,11 +27,10 @@ class Hub : public Prop {
         // FIX: Hub take data singleton
         Hub() : 
             Prop("hub"),
-            _frame("./assets/waterfalls.jpg")
+            _frame("./assets/Imgs/waterfalls.jpg")
             {}
 
         void init(sf::RenderWindow &win);
-        void change_point(Point &pt);
         void render(sf::RenderWindow &win) override;
 };
 

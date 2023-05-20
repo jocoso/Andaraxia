@@ -53,7 +53,3 @@ void Hub::render(sf::RenderWindow &win) {
     win.draw(_output);
     win.draw(_menuBar);
 }
-
-void Hub::change_point(Point &scn) {
-
-}

@@ -61,18 +61,29 @@ void DataReader::update() {
 
 Point &DataReader::getPoint(std::string id) {
     update();
-    Point r;
+    Point *r = new Point;
     
     for(long long unsigned int i = 0; i < _data.at("points").size(); i++) {
         if(_data.at("points").at(i).at("id") == id) {
   
-            r.id = _data.at("points").at(i).at("id");
-            r.type = _data.at("points").at(i).at("type");
-            r.title = _data.at("points").at(i).at("title");
-            r.desc = _data.at("points").at(i).at("desc");
+            r->id = _data.at("points").at(i).at("id");
+            r->type = _data.at("points").at(i).at("type");
+            r->title = _data.at("points").at(i).at("title");
+            r->desc = _data.at("points").at(i).at("desc");
 
         }
     }
 
-    return r;
+    return *r;
+}
+
+Prop *DataReader::point2prop(Point &pt) {
+    Prop *p = nullptr;
+
+    if(pt.type == "hub") {
+        Hub *h = new Hub();
+        p = h;
+    }
+
+    return p;
 }

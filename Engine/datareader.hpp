@@ -109,6 +109,8 @@ class DataReader {
         std::string datapath() const {
             return _datapath;
         }
+
+        Prop *point2prop(Point &pt);
 };
 
 #endif // DATA_READER_HPP
